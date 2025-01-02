@@ -1,5 +1,6 @@
 mod error;
 mod router;
+use tower_http::cors::{Any, CorsLayer};
 
 use std::{fmt::Debug, net::SocketAddr, path::PathBuf, str::FromStr, sync::Arc};
 
@@ -67,6 +68,11 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
 
     info!("distributor: {:?}", distributor);
 
+    let cors = CorsLayer::new()
+        .allow_origin(Any)
+        .allow_methods(Any)
+        .allow_headers(Any);
+
     let state = Arc::new(RouterState {
         tree: AirdropMerkleTree::new_from_file(&args.merkle_tree_path)?.convert_to_hashmap(),
         program_id: args.program_id,
@@ -74,7 +80,7 @@ async fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
         rpc_client,
     });
 
-    let app = router::get_routes(state, args.enable_proof_endpoint);
+    let app = router::get_routes(state, args.enable_proof_endpoint).layer(cors);
 
     axum::Server::bind(&args.bind_addr)
         .serve(app.into_make_service_with_connect_info::<SocketAddr>())
