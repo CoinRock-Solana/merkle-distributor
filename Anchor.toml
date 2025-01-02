@@ -14,20 +14,8 @@ members = [
 ]
 
 [provider]
-cluster = "testnet"
-wallet = "payxNNNpXxeZMuqCPoiDxCvPRKamjq3mzdiTxHZxUhq.json"
-
-[programs.mainnet]
-merkle_distributor = "m1uqAm3yAagng3uqphvQ4rRAkRy17F4JX87pFemLBKv"
-
-[programs.devnet]
-merkle_distributor = "m1uqAm3yAagng3uqphvQ4rRAkRy17F4JX87pFemLBKv"
-
-[programs.testnet]
-merkle_distributor = "m1uqAm3yAagng3uqphvQ4rRAkRy17F4JX87pFemLBKv"
-
-[programs.localnet]
-merkle_distributor = "m1uqAm3yAagng3uqphvQ4rRAkRy17F4JX87pFemLBKv"
+cluster = "https://api.devnet.solana.com"
+wallet = "/Users/visheshsachdev/.config/solana/id.json"
 
 [scripts]
 test = "yarn mocha"
